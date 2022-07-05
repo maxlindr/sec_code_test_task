@@ -1,0 +1,27 @@
+.main {
+  padding: 80px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #e7ebf0;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px + 2 * 80px + 80px;
+  min-height: 100%;
+  width: 100%;
+}
+
+.app {
+  height: 100vh;
+  min-width: 1280px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+
+  @supports (scrollbar-gutter: stable) {
+    overflow: auto;    
+    scrollbar-gutter: stable;  
+  }
+}
