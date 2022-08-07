@@ -1,0 +1,27 @@
+.container {
+  margin-top: -8px;
+  box-sizing: border-box;
+  padding-left: 19px;
+  padding-right: 19px;
+  list-style: none;
+
+  & > * {
+    margin-top: 8px;
+  }
+}
+
+.leaf {
+  & + & {
+    margin-top: 12px;
+  }
+}
+
+.scrollbox {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  overflow: auto;
+}
+
+.noItems {
+  margin: 0 16px;
+}

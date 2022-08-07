@@ -1,0 +1,10 @@
+.control {
+  font-size: 16px;
+  line-height: 22px;
+  text-align: start;
+
+  &:focus,
+  &:hover {
+    color: var(--color-highlight);
+  }
+}
