@@ -1,0 +1,19 @@
+.tab {
+  padding: 16px 8px 8px;
+
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 2px solid transparent;
+
+  font-family: inherit;
+  font-size: 16px;
+
+  &:focus {
+    color: var(--color-blue);
+  }
+}
+
+.tabSelected {
+  color: var(--color-blue);
+  border-bottom-color: var(--color-blue);
+}
