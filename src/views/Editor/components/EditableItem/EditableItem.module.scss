@@ -1,0 +1,55 @@
+.root {
+  position: relative;
+  min-height: 24px + 16px + 2px;
+  display: flex;
+  border: 1px solid transparent;
+  padding-right: 8px;
+}
+
+.rootEditable {
+  border-color: #f6f6f8;
+  background-color: #f6f6f8;
+}
+
+.staticText {
+  padding: 8px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.textInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px;
+
+  appearance: none;
+  border: none;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 24px;
+
+  background: transparent;
+}
+
+.hidden {
+  display: none;
+}
+
+.controls {
+  position: relative;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 56px;
+}
+
+.editBtn {
+  margin-left: auto;
+}

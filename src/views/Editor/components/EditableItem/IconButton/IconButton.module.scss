@@ -1,0 +1,12 @@
+.root {
+  svg path {
+    fill: gray;
+  }
+
+  &:hover,
+  &:focus {
+    svg path {
+      fill: var(--color-blue);
+    }
+  }
+}
