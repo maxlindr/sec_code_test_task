@@ -66,6 +66,7 @@ export const MainPage = ({ data, onSubmit = noop, onLoad = noop }: Props) => {
     <div className={styles.root}>
       <div className={styles.columns}>
         <div className={styles.column}>
+          <h1 className={styles.headline}>Коктейли</h1>
           <TreeView
             dropboxHeight="100%"
             data={nodes}
