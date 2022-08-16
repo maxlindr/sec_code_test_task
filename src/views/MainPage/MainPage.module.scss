@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 80px;
+  flex-grow: 1;
+}
+
+.column {
+  background-color: white;
+  border-radius: 4px;
+}
+
+.footer {
+  margin-top: 40px;
+}
+
+.treeView {
+  padding-top: 20px;
+}
+
+.footerButton {
+  &:not(:first-child) {
+    margin-left: 20px;
+  }
+}
