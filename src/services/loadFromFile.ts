@@ -1,5 +1,5 @@
 import { mocks } from './mocks';
-import { convertFlatToTree, convertRawToTreeNode } from './utils';
+import { convertFlatToTree, convertMockToTreeNode } from './utils';
 
 const readFile = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -35,5 +35,5 @@ export const loadDataFromFile = async () => {
 };
 
 export const loadDataFromMocks = async () => {
-  return convertRawToTreeNode(mocks);
+  return convertMockToTreeNode(mocks);
 };

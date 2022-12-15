@@ -1,24 +1,9 @@
 import { TreeNode } from '../components/TreeView/utils';
-import { clone, findNodeById } from '../utils';
-
-const convertRawTreeToTreeNodes = (data: TreeNode<string>[]) => {
-  data.forEach((rawNode) => {
-    const children = rawNode.children;
-
-    if (children) {
-      children.forEach((it) => {
-        it.parent = rawNode;
-      });
-
-      convertRawTreeToTreeNodes(children);
-    }
-  });
-};
+import { MockTreeNode } from './mocks';
 
 interface FlattenTreeNode<T extends string | number> {
   id: T;
   name: string;
-  parent?: T;
   children?: T[];
 }
 
@@ -27,21 +12,14 @@ const flattenTree = (
   result: FlattenTreeNode<string>[]
 ) => {
   data.forEach((node) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { parent, children, ...rest } = node;
 
-    const newNode = {
+    const newNode: FlattenTreeNode<string> = {
       ...rest,
-      parent: parent?.id,
-      children: children?.map((it) => it.id),
     };
 
-    if (!newNode.parent) {
-      delete newNode.parent;
-    }
-
-    if (!newNode.children) {
-      delete newNode.children;
-    }
+    if (children) newNode.children = children.map((it) => it.id);
 
     result.push(newNode);
 
@@ -52,58 +30,58 @@ const flattenTree = (
 };
 
 export const convertFlatToTree = (arr: FlattenTreeNode<string>[]) => {
-  const tree: TreeNode<string>[] = [];
+  const nodes = new Map<string, TreeNode<string>>();
+
+  arr.forEach(({ id, name }) => {
+    nodes.set(id, {
+      id,
+      name,
+    });
+  });
 
   arr.forEach((it) => {
-    if (!it.parent) {
-      tree.push(it as TreeNode<string>);
-      return;
-    }
+    const { id, children } = it;
 
-    const parent = findNodeById(it.parent ?? '', tree);
+    if (!children) return;
 
-    if (parent) {
-      if (!parent.children) {
-        parent.children = [];
-      }
+    const node = nodes.get(id);
 
-      parent.children.push({
-        id: it.id,
-        name: it.name,
-        parent,
-      });
+    if (!node) return;
 
-      parent.children = parent.children.filter((it) => typeof it !== 'string');
-    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const findNode = (id: string) => nodes.get(id)!;
+
+    const nodeChildren = children.map(findNode);
+    nodeChildren.forEach((it) => (it.parent = node));
+    node.children = nodeChildren;
   });
 
-  return tree;
+  return Array.from(nodes.values()).filter((node) => !node.parent);
 };
 
-const convertTreeNodesToRawTree = (
-  data: TreeNode<string>[],
-  copy: TreeNode<string>[]
+export const convertMockToTreeNode = <T extends string | number>(
+  mock: MockTreeNode<T>[]
 ) => {
-  data.forEach((node) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { parent, ...rest } = node;
-    const newNode = { ...rest };
+  const cloneTreeNode = (root: MockTreeNode<T>, parent?: TreeNode<T>) => {
+    const rootClone: TreeNode<T> = {
+      id: root.id,
+      name: root.name,
+    };
 
-    copy.push(newNode);
+    if (parent) rootClone.parent = parent;
 
-    const children = node.children;
-
-    if (children) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      convertTreeNodesToRawTree(children, copy);
+    if (root.children) {
+      rootClone.children = root.children.map((child) =>
+        cloneTreeNode(child, rootClone)
+      );
     }
-  });
-};
 
-export const convertRawToTreeNode = (data: unknown) => {
-  const clonedData = clone(data) as TreeNode<string>[];
-  convertRawTreeToTreeNodes(clonedData);
-  return clonedData;
+    return rootClone;
+  };
+
+  const result = mock.map((node) => cloneTreeNode(node));
+
+  return result;
 };
 
 export const convertTreeToJSON = (tree: TreeNode<string>[]) => {

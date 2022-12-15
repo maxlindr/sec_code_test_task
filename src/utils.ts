@@ -1,5 +1,4 @@
 import { TreeNode } from './components/TreeView/utils';
-import deepClone from 'clone-deep';
 
 type ID = number | string;
 
@@ -45,10 +44,6 @@ export const findNodeById = <T extends string | number>(
   }
 
   return null;
-};
-
-export const clone = <T>(obj: T) => {
-  return deepClone(obj) as T;
 };
 
 export const replaceNode = <T extends string | number>(

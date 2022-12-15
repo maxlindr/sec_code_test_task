@@ -1,6 +1,10 @@
-import { TreeNode } from '../components/TreeView/utils';
+export interface MockTreeNode<T extends string | number> {
+  id: T;
+  name: string;
+  children?: MockTreeNode<T>[];
+}
 
-export const mocks: TreeNode<string>[] = [
+export const mocks: MockTreeNode<string>[] = [
   {
     id: '0',
     name: 'Концептуальные',
